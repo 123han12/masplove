@@ -1,0 +1,6 @@
+# 忽略vscode配置文件
+.vscode/
+# 忽略Cmake 生成的缓存文件
+build/
+# 忽略项目生成的可执行文件
+bin/
