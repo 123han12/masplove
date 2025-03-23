@@ -2,7 +2,7 @@
  * @Author: 123han12 2146298774@qq.com
  * @Date: 2025-03-22 10:41:13
  * @LastEditors: 123han12 2146298774@qq.com
- * @LastEditTime: 2025-03-22 17:26:15
+ * @LastEditTime: 2025-03-23 10:35:46
  * @FilePath: /masplove/sylar/src/log/LogAppender/FileLogAppender.h
  * @Description: 文件输出流
  * 
@@ -22,7 +22,7 @@ public:
     using ptr = std::shared_ptr<FileLogAppender> ; 
     FileLogAppender(const std::string& file_name);
     ~FileLogAppender();
-    void log(LogLevel::Level level, const LogEvent::ptr event) override;
+    void log(std::shared_ptr<Logger> logger , LogLevel::Level level, const LogEvent::ptr event) override;
     bool reopen();
 private:
     std::ofstream m_fileStream;

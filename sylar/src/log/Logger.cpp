@@ -2,7 +2,7 @@
  * @Author: 123han12 2146298774@qq.com
  * @Date: 2025-03-22 10:37:26
  * @LastEditors: 123han12 2146298774@qq.com
- * @LastEditTime: 2025-03-22 17:24:06
+ * @LastEditTime: 2025-03-23 18:05:45
  * @FilePath: /masplove/sylar/src/log/Logger.cpp
  * @Description: Logger 具体实现
  * 
@@ -18,17 +18,28 @@ Logger::Logger(const std::string& name)
 m_level(LogLevel::DEBUG)
 {
     m_vecAppender.clear();
+    m_formatter.reset(new LogFormatter("%d [%p] [%f:%l]:%m %n")); 
+    /*
+        XX(m , MessageFormatItem)
+        XX(p , LevelFormatItem)
+        XX(r , ElapseFormatItem)
+        XX(c , LoggerNameFormatItem)
+        XX(t , ThreadIdFormatItem)
+        XX(n , NextLineFormatItem)
+        XX(d , DateTimeFormatItem)
+        XX(f , FileNameFormatItem)
+        XX(l , LineFormatItem)
+    */
 }
 
 void Logger::log(LogLevel::Level level, LogEvent::ptr event)
 {
-    if(m_level > level)
-    {
-        return;
-    }
-    for(auto iter : m_vecAppender)
-    {
-        iter->log(level , event);    // 日志输出地输出对应的日志
+    if(level >= m_level)
+    {   
+        for(auto iter : m_vecAppender)
+        {
+            iter->log(shared_from_this() , level , event);    // 日志输出地输出对应的日志
+        }
     }
 }
 
@@ -58,6 +69,10 @@ void Logger::addAppender(LogAppender::ptr appender){
         {
             return;
         }
+    }
+    if(nullptr == appender->getFormatter())
+    {   
+        appender->setFormatter(m_formatter);    
     }
     m_vecAppender.push_back(appender);  // 放入日志器
 }

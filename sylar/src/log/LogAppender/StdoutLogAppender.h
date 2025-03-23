@@ -2,7 +2,7 @@
  * @Author: 123han12 2146298774@qq.com
  * @Date: 2025-03-22 10:40:48
  * @LastEditors: 123han12 2146298774@qq.com
- * @LastEditTime: 2025-03-22 17:26:45
+ * @LastEditTime: 2025-03-23 10:35:53
  * @FilePath: /masplove/sylar/src/log/LogAppender/StdoutLogAppender.h
  * @Description: 
  * 
@@ -26,7 +26,7 @@ public:
     using ptr = std::shared_ptr<StdoutLogAppender>;
     StdoutLogAppender();
     ~StdoutLogAppender();
-    void log(LogLevel::Level level, const LogEvent::ptr event) override;
+    void log(std::shared_ptr<Logger> logger ,LogLevel::Level level, const LogEvent::ptr event) override;
 };
 
 };
